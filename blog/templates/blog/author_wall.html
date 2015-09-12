@@ -1,0 +1,49 @@
+{% extends "blog/layout.html" %}
+{% load bootstrap3 thumbnail %}
+
+{% block navbar_left %}
+    <li><a><span class="label label-info">{{ count }}</span></a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-10">
+            <h1>
+                {{ author }}
+                {% if user != author %}
+                    {% if is_follow %}
+                        <a href="{% url "user_unfollow" author.username %}?next={{ request.path }}" title="언팔하기">
+                            <small class="glyphicon glyphicon-ok text-success"></small>
+                        </a>
+                    {% else %}
+                        <a href="{% url "user_follow" author.username %}?next={{ request.path }}" title="팔로우하기">
+                            <small class="glyphicon glyphicon-plus text-muted"></small>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        {% for post in post_list %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="{% url "blog:detail" post.pk %}">
+                        {% if not post.photo %}
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="400" height="400" class="img-rounded" />
+                        {% else %}
+                            {% thumbnail post.photo "400x400" crop="center" as im %}
+                                <img src="{{ im.url }}" width="400" height="400" class="img-rounded" />
+                            {% endthumbnail %}
+                        {% endif %}
+                        <div class="caption">
+                            <h5>{{ post.title }}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block title %} 사진들 {% endblock %}
+{% block content %}
+    <p>사진들</p>
+    {% for photo in photos %}
+    <p><img src="{{ photo.image_file.url }}"/></p>
+    {% endfor %}
+{% endblock %}
