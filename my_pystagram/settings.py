@@ -110,7 +110,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '..', 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'static2'),
@@ -123,11 +123,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_deploy')
 MEDIA_URL = '/uploads/'
 
 #실제 폴더명
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploadfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'uploadfiles')
 
 # 메시지 설정
-from django.contrib.messages import constants as messages
-MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
-}
-MESSAGE_LEVEL = messages.DEBUG
+try:
+    from django.contrib.messages import constants as messages
+    MESSAGE_TAGS = {
+        messages.ERROR: 'danger',
+    }
+    MESSAGE_LEVEL = messages.DEBUG
+except ImportError:
+    pass
